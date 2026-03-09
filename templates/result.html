@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+
+{% block title %}PE Insight — Result{% endblock %}
+
+{% block content %}
+<section class="panel page-header-panel">
+    <div>
+        <div class="section-label">Analysis Result</div>
+        <h2 class="page-title page-title-sm">{{ file_name }}</h2>
+        <p class="lead compact">
+            Triage completed. Review the overview first, then drill into sections, imports, and strings.
+        </p>
+    </div>
+
+    <div class="action-row">
+        <a href="{{ url_for('serve_report', filename=html_report_name) }}" class="secondary-link" target="_blank">Open HTML report</a>
+        <a href="{{ url_for('serve_report', filename=json_report_name) }}" class="secondary-link" target="_blank">Open JSON</a>
+        <a href="{{ url_for('index') }}" class="secondary-link">Analyze another file</a>
+    </div>
+</section>
+
+<section class="overview-grid">
+    <article class="panel risk-panel">
+        <div class="section-label">Risk</div>
+<div
+    class="risk-ring risk-{{ result.risk_assessment.risk_level }}"
+    data-score-angle="{{ result.risk_assessment.risk_score * 3.6 }}"
+>            <div class="risk-ring-core">
+                <strong>{{ result.risk_assessment.risk_score }}</strong>
+                <span>{{ result.risk_assessment.risk_level|upper }}</span>
+            </div>
+        </div>
+        <p class="risk-note">{{ result.risk_assessment.note }}</p>
+    </article>
+
+    <article class="panel">
+        <div class="section-label">PE Summary</div>
+        <div class="kv-grid">
+            <div><span>Format</span><strong>{{ result.pe_format }}</strong></div>
+            <div><span>Machine</span><strong>{{ result.machine }}</strong></div>
+            <div><span>Sections</span><strong>{{ result.number_of_sections }}</strong></div>
+            <div><span>Entry Point</span><strong>{{ result.entry_point }}</strong></div>
+            <div><span>Image Base</span><strong>{{ result.image_base }}</strong></div>
+            <div><span>Compiled</span><strong>{{ result.compile_timestamp_utc }}</strong></div>
+        </div>
+    </article>
+
+    <article class="panel">
+        <div class="section-label">Quick Facts</div>
+        <div class="metric-grid">
+            {% for item in visual.overview_metrics %}
+                <div class="metric-card">
+                    <strong>{{ item.value }}</strong>
+                    <span>{{ item.label }}</span>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="subtle-list">
+            {% if result.anomaly_summary %}
+                {% for item in result.anomaly_summary %}
+                    <div>{{ item }}</div>
+                {% endfor %}
+            {% else %}
+                <div>No anomaly hints from current rules.</div>
+            {% endif %}
+        </div>
+    </article>
+</section>
+
+<section class="visual-grid">
+    <article class="panel">
+        <div class="section-label">Section Entropy</div>
+        <h3 class="panel-title">Highest-entropy sections</h3>
+
+        <div class="bar-chart">
+            {% for item in visual.section_entropy_chart %}
+                <div class="bar-row">
+                    <div class="bar-label">{{ item.label }}</div>
+                    <div class="bar-track">
+<div class="bar-fill level-neutral" data-bar-width="{{ item.width }}"></div>                    </div>
+                    <div class="bar-value">{{ "%.2f"|format(item.value) }}</div>
+                </div>
+            {% else %}
+                <div class="empty-state">No section data available.</div>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="panel">
+        <div class="section-label">Indicators</div>
+        <h3 class="panel-title">Risk factor distribution</h3>
+
+        <div class="bar-chart">
+            {% for item in visual.indicator_chart %}
+                <div class="bar-row">
+                    <div class="bar-label">{{ item.label }}</div>
+                    <div class="bar-track">
+                     <div class="bar-fill level-neutral" data-bar-width="{{ item.width }}"></div>
+                    </div>
+                    <div class="bar-value">{{ item.value }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="panel">
+        <div class="section-label">Strings</div>
+        <h3 class="panel-title">Interesting string categories</h3>
+        <p class="subtle-help">
+    Scanned {{ result.strings_summary.scanned_bytes }} bytes{% if result.strings_summary.scan_truncated %} of {{ result.strings_summary.full_file_size }} bytes{% endif %}.
+</p>
+
+        <div class="bar-chart">
+            {% for item in visual.string_chart %}
+                <div class="bar-row">
+                    <div class="bar-label">{{ item.label }}</div>
+                    <div class="bar-track">
+                      <div class="bar-fill level-soft" data-bar-width="{{ item.width }}"></div>
+                    </div>
+                    <div class="bar-value">{{ item.value }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </article>
+</section>
+
+<section class="panel">
+    <div class="section-label">Suspicious Imports</div>
+    <h3 class="panel-title">Matched APIs</h3>
+
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>DLL</th>
+                    <th>API</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in visual.top_suspicious_imports %}
+                    <tr>
+                        <td>{{ item.dll }}</td>
+                        <td>{{ item.api }}</td>
+                        <td>{{ item.category }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">No suspicious imports matched current rules.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="panel">
+    <div class="section-label">Sections</div>
+    <h3 class="panel-title">Section table</h3>
+
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>VA</th>
+                    <th>VSize</th>
+                    <th>Raw Size</th>
+                    <th>Entropy</th>
+                    <th>Perms</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for section in result.sections %}
+                    <tr>
+                        <td>{{ section.name or "unnamed" }}</td>
+                        <td>{{ section.virtual_address }}</td>
+                        <td>{{ section.virtual_size }}</td>
+                        <td>{{ section.raw_size }}</td>
+                        <td>{{ section.entropy }}</td>
+                        <td>
+                            {% if section.permissions.read %}R{% endif %}
+                            {% if section.permissions.write %}W{% endif %}
+                            {% if section.permissions.execute %}X{% endif %}
+                        </td>
+                        <td>
+                            {% if section.notes %}
+                                {{ section.notes | join(", ") }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="detail-grid">
+    <article class="panel">
+        <div class="section-label">Imports by DLL</div>
+        <h3 class="panel-title">Raw import groups</h3>
+
+        <div class="accordion-stack">
+            {% for entry in result.imports[:12] %}
+                <details class="fold">
+                    <summary>
+                        <span>{{ entry.dll }}</span>
+                        <span>{{ entry.import_count }} imports</span>
+                    </summary>
+                    <div class="fold-body">
+                        <div class="token-wrap">
+                            {% for fn in entry.functions[:40] %}
+                                <span class="token">{{ fn.name or ("ordinal:" ~ fn.ordinal) }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </details>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="panel">
+        <div class="section-label">Interesting Strings</div>
+        <h3 class="panel-title">Grouped output</h3>
+
+        <div class="string-grid">
+            <div>
+                <h4>URLs</h4>
+                <ul class="clean-list">
+                    {% for item in result.interesting_strings.url[:10] %}
+                        <li>{{ item }}</li>
+                    {% else %}
+                        <li>None</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div>
+                <h4>Registry Keys</h4>
+                <ul class="clean-list">
+                    {% for item in result.interesting_strings.registry_key[:10] %}
+                        <li>{{ item }}</li>
+                    {% else %}
+                        <li>None</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div>
+                <h4>Command Hints</h4>
+                <ul class="clean-list">
+                    {% for item in result.interesting_strings.command_hint[:10] %}
+                        <li>{{ item }}</li>
+                    {% else %}
+                        <li>None</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div>
+                <h4>IPv4</h4>
+                <ul class="clean-list">
+                    {% for item in result.interesting_strings.ipv4[:10] %}
+                        <li>{{ item }}</li>
+                    {% else %}
+                        <li>None</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </article>
+</section>
+{% endblock %}

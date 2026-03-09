@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}PE Insight — Processing{% endblock %}
+
+{% block content %}
+<section class="processing-page panel" id="processing-root" data-task-id="{{ task_id }}">
+    <div class="section-label">Analysis In Progress</div>
+    <h2 class="page-title page-title-sm">{{ file_name }}</h2>
+    <p class="lead compact">
+        The binary is being processed. This page updates automatically and will move to the result view when complete.
+    </p>
+
+    <div class="processing-status-card">
+        <div class="processing-status-top">
+            <strong id="processing-stage-label">Queued for analysis</strong>
+            <span id="processing-progress-text">8%</span>
+        </div>
+
+        <div class="processing-progress-track">
+            <div class="processing-progress-fill" id="processing-progress-fill"></div>
+        </div>
+
+        <div class="processing-status-note" id="processing-status-note">
+            Initializing analysis task…
+        </div>
+    </div>
+
+    <div class="processing-log">
+        <div class="log-line">Preparing analysis environment</div>
+        <div class="log-line">Waiting for backend stage updates</div>
+        <div class="log-line">Result page will open automatically</div>
+    </div>
+
+    <div class="action-row">
+        <a href="{{ url_for('index') }}" class="secondary-link">Back to upload</a>
+    </div>
+</section>
+{% endblock %}

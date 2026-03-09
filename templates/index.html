@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}PE Insight — Upload{% endblock %}
+
+{% block content %}
+<section class="hero-grid">
+    <article class="panel intro-panel">
+        <div class="section-label">Overview</div>
+        <h2 class="page-title">Windows binary triage with a quieter, analyst-first UI.</h2>
+        <p class="lead">
+            Upload an EXE or DLL to inspect PE structure, section entropy, suspicious imports,
+            extracted strings, and a consolidated risk score.
+        </p>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <strong>PE Map</strong>
+                <span>Headers, machine type, entry point, sections</span>
+            </div>
+            <div class="info-card">
+                <strong>Heuristics</strong>
+                <span>Entropy, RWX sections, suspicious APIs, strings</span>
+            </div>
+            <div class="info-card">
+                <strong>Reports</strong>
+                <span>Structured JSON and standalone HTML export</span>
+            </div>
+        </div>
+    </article>
+
+    <article class="panel upload-panel">
+        <div class="section-label">Input</div>
+        <h3 class="panel-title">Upload binary</h3>
+
+        <form method="POST" action="/submit" enctype="multipart/form-data" class="analyze-form" id="analyze-form">
+            <label class="dropzone" id="dropzone" for="binary_file">
+                <input id="binary_file" name="binary_file" type="file" accept=".exe,.dll" required />
+                <div class="dropzone-copy">
+                    <strong>Select EXE or DLL</strong>
+                    <span>Drag and drop, or click to browse</span>
+                    <small id="file-pill">No file selected</small>
+                </div>
+            </label>
+
+            <button type="submit" class="primary-button">Analyze</button>
+        </form>
+
+        {% if error %}
+            <div class="status-box error">{{ error }}</div>
+        {% endif %}
+    </article>
+</section>
+
+<section class="panel checklist-panel">
+    <div class="section-label">Pipeline</div>
+    <div class="pipeline-grid">
+        <div class="pipeline-step"><span>01</span><p>Validate input</p></div>
+        <div class="pipeline-step"><span>02</span><p>Parse PE format</p></div>
+        <div class="pipeline-step"><span>03</span><p>Inspect sections and imports</p></div>
+        <div class="pipeline-step"><span>04</span><p>Extract strings and indicators</p></div>
+        <div class="pipeline-step"><span>05</span><p>Score and export reports</p></div>
+    </div>
+</section>
+{% endblock %}

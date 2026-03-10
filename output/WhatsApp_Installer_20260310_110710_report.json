@@ -1,0 +1,186 @@
+{
+    "file_name": "WhatsApp_Installer.exe",
+    "pe_format": "PE32",
+    "machine": "x86",
+    "machine_raw": "0x14c",
+    "number_of_sections": 3,
+    "compile_timestamp_raw": 3747715944,
+    "compile_timestamp_utc": "2088-10-04T08:12:24+00:00",
+    "entry_point": "0xfa9ca",
+    "image_base": "0x400000",
+    "anomaly_summary": [
+        "1 section(s) have high entropy"
+    ],
+    "import_summary": [
+        "Imported DLL count: 1",
+        "Imported function count: 1",
+        "No suspicious API matches by current rules"
+    ],
+    "suspicious_imports": [],
+    "imports": [
+        {
+            "dll": "mscoree.dll",
+            "import_count": 1,
+            "functions": [
+                {
+                    "name": "_CorExeMain",
+                    "ordinal": null,
+                    "address": "0x402000"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": ".text",
+            "virtual_address": "0x2000",
+            "virtual_size": 1018352,
+            "raw_size": 1018368,
+            "pointer_to_raw_data": "0x200",
+            "characteristics_raw": "0x60000020",
+            "permissions": {
+                "read": true,
+                "write": false,
+                "execute": true
+            },
+            "entropy": 6.736,
+            "entropy_level": "medium",
+            "notes": []
+        },
+        {
+            "name": ".rsrc",
+            "virtual_address": "0xfc000",
+            "virtual_size": 75040,
+            "raw_size": 75264,
+            "pointer_to_raw_data": "0xf8c00",
+            "characteristics_raw": "0x40000040",
+            "permissions": {
+                "read": true,
+                "write": false,
+                "execute": false
+            },
+            "entropy": 7.936,
+            "entropy_level": "high",
+            "notes": [
+                "high_entropy_section"
+            ]
+        },
+        {
+            "name": ".reloc",
+            "virtual_address": "0x110000",
+            "virtual_size": 12,
+            "raw_size": 512,
+            "pointer_to_raw_data": "0x10b200",
+            "characteristics_raw": "0x42000040",
+            "permissions": {
+                "read": true,
+                "write": false,
+                "execute": false
+            },
+            "entropy": 0.102,
+            "entropy_level": "low",
+            "notes": []
+        }
+    ],
+    "strings_summary": {
+        "ascii_string_count": 16069,
+        "utf16le_string_count": 3412,
+        "combined_unique_string_count": 10726,
+        "scanned_bytes": 1123872,
+        "full_file_size": 1123872,
+        "scan_truncated": false,
+        "interesting_counts": {
+            "url": 25,
+            "ipv4": 16,
+            "windows_path": 10,
+            "registry_key": 3,
+            "command_hint": 0
+        }
+    },
+    "interesting_strings": {
+        "url": [
+            "9http://schemas.microsoft.com/winfx/2006/xaml/presentation",
+            "x,http://schemas.microsoft.com/winfx/2006/xaml",
+            "d2http://schemas.microsoft.com/expression/blend/2008",
+            "mc;http://schemas.openxmlformats.org/markup-compatibility/2006",
+            "shell9http://schemas.microsoft.com/netfx/2009/xaml/presentation",
+            "Chttp://www.microsoft.com/pkiops/crl/MicCodSigPCA2011_2011-07-08.crl0a",
+            "Ehttp://www.microsoft.com/pkiops/certs/MicCodSigPCA2011_2011-07-08.crt0",
+            "Ihttp://crl.microsoft.com/pki/crl/products/MicRooCerAut2011_2011_03_22.crl0^",
+            "Bhttp://www.microsoft.com/pki/certs/MicRooCerAut2011_2011_03_22.crt0",
+            "3http://www.microsoft.com/pkiops/docs/primarycps.htm0@",
+            "http://www.microsoft.com0",
+            "Nhttp://www.microsoft.com/pkiops/crl/Microsoft%20Time-Stamp%20PCA%202010(1).crl0l",
+            "Phttp://www.microsoft.com/pkiops/certs/Microsoft%20Time-Stamp%20PCA%202010(1).crt0",
+            "3http://www.microsoft.com/pkiops/Docs/Repository.htm0",
+            "Ehttp://crl.microsoft.com/pki/crl/products/MicRooCerAut_2010-06-23.crl0Z",
+            ">http://www.microsoft.com/pki/certs/MicRooCerAut_2010-06-23.crt0",
+            "Makes the application long-path aware. See https://docs.microsoft.com/windows/win32/fileio/maximum-file-path-limitation -->",
+            "<dpiAware xmlns=\"http://schemas.microsoft.com/SMI/2005/WindowsSettings\">true</dpiAware>",
+            "<longPathAware xmlns=\"http://schemas.microsoft.com/SMI/2016/WindowsSettings\">true</longPathAware>",
+            "Qhttp://www.microsoft.com/pkiops/crl/Microsoft%20Marketplace%20CA%20G%20023(1).crl0o",
+            "Shttp://www.microsoft.com/pkiops/certs/Microsoft%20Marketplace%20CA%20G%20023(1).crt0",
+            "Fhttp://crl.microsoft.com/pki/crl/products/MicMarPCA2011_2011-03-28.crl0[",
+            "?http://www.microsoft.com/pki/certs/MicMarPCA2011_2011-03-28.crt0",
+            "https://displaycatalog.mp.microsoft.com/v7.0/ratings?market=",
+            "https://storeedge.microsoft.com/v9.0/pages/home?market=US&locale=en-US&deviceFamily=Windows.Desktop&hydrateCount=3&deviceFamilyVersion=&architecture=x64&smode=false"
+        ],
+        "ipv4": [
+            "System.Security.Permissions.SecurityPermissionAttribute, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "9.0.12.0",
+            "zSystem.Windows.FontSizeConverter, PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35",
+            "lSystem.Resources.ResourceReader, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089#System.Resources.RuntimeResourceSet",
+            "SPresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35",
+            "XPresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35",
+            "aSystem.Windows.Controls.Ribbon, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "NWindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35",
+            "NSystem.Xaml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Kmscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "NSystem.Xaml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 \"",
+            "NSystem.Xaml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 !",
+            "QSystem.Runtime, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+            "<assemblyIdentity version=\"1.0.0.0\" name=\"StoreInstaller.App\"/>",
+            "version=\"6.0.0.0\"",
+            "1.3.6.1.4.1.11129.2.1.9999"
+        ],
+        "windows_path": [
+            "D:\\a\\_work\\1\\s\\src\\StoreInstaller\\obj\\Release\\net472\\StoreInstaller.pdb",
+            "D:\\a\\_work\\1\\s\\src\\StoreInstaller\\Helpers\\TagExtractor.cs",
+            "D:\\a\\_work\\1\\s\\src\\StoreInstaller\\MainWindow.xaml.cs",
+            "D:\\a\\_work\\1\\s\\src\\StoreInstaller\\Telemetry\\StoreAsimovLogger.cs",
+            "D:\\a\\_work\\1\\s\\src\\StoreInstaller\\ViewModels\\InstallViewModel.cs",
+            "D:\\a\\_work\\1\\s\\src\\StoreInstaller\\Acquisition\\InstallManager.cs",
+            "D:\\a\\_work\\1\\s\\src\\StoreInstaller\\Helpers\\AppActivation.cs",
+            "D:\\a\\_work\\1\\s\\src\\StoreInstaller\\ViewModels\\MaturityRatingViewModel.cs",
+            "D:\\a\\_work\\1\\s\\src\\StoreInstaller\\Acquisition\\WpmInstaller.cs",
+            "D:\\a\\_work\\1\\s\\src\\StoreInstaller\\Acquisition\\WuInstaller.cs"
+        ],
+        "registry_key": [
+            "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes",
+            "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+            "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM"
+        ],
+        "command_hint": []
+    },
+    "risk_assessment": {
+        "risk_score": 33,
+        "risk_level": "medium",
+        "risk_factors": [
+            "High-entropy sections found: .rsrc (+15)",
+            "Registry-related strings found: 3 (+8)",
+            "URL strings found: 25 (+5)",
+            "IPv4 strings found: 16 (+5)"
+        ],
+        "indicator_counts": {
+            "high_entropy_sections": 1,
+            "rwx_sections": 0,
+            "suspicious_imports": 0,
+            "suspicious_import_categories": 0,
+            "url_strings": 25,
+            "ipv4_strings": 16,
+            "registry_strings": 3,
+            "command_hint_strings": 0
+        },
+        "note": "Heuristic score only. This is a triage aid, not a malware verdict."
+    }
+}
